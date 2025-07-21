@@ -31,6 +31,7 @@ Strands Agents サンプルリポジトリへようこそ！
 **このリポジトリのサンプルは、[GitHub の Strands Agents の samples リポジトリの 01-tutorials](https://github.com/strands-agents/samples/tree/main/01-tutorials) のノートブックや LLM へのプロンプトなどを日本語化したものです。**
 
 **このリポジトリのサンプルは、Linux のコンピュータまたは Amazon Sage Maker AI JupyterLab 環境で実行することを前提にしています。**
+**このリポジトリのサンプルは、AWS リージョン us-west-2 の Amazon Bedrock のいくつかの基盤モデルを使用することを前提にしています。**
 
 このリポジトリのサンプルは、**デモンストレーションおよび教育目的**のみに提供されています。概念や手法を示すものであり、**本番環境での直接使用を意図したものではありません**。本番環境で使用する前に、必ず適切な**セキュリティ**および**テスト**手順を適用してください。
 
