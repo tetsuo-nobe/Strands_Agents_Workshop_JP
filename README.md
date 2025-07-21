@@ -1,1 +1,125 @@
-# Strands_Agents_Workshop_JP
+<div align="center">
+<div>
+<a href="https://strandsagents.com">
+<img src="https://strandsagents.com/latest/assets/logo-auto.svg" alt="Strands Agents" width="55px" height="105px">
+</a>
+</div>
+
+<h1>
+Strands Agents サンプル
+</h1>
+
+<h2>
+わずか数行のコードでAIエージェントを構築できるモデル駆動型アプローチ。
+</h2>
+
+<div align="center">
+<a href="https://github.com/strands-agents/samples/graphs/commit-activity"><img alt="GitHub コミットアクティビティ" src="https://img.shields.io/github/commit-activity/m/strands-agents/samples"/></a>
+<a href="https://github.com/strands-agents/samples/issues"><img alt="GitHub オープン Issue" src="https://img.shields.io/github/issues/strands-agents/samples"/></a>
+<a href="https://github.com/strands-agents/samples/pulls"><img alt="GitHub オープンプルリクエスト" src="https://img.shields.io/github/issues-pr/strands-agents/samples"/></a>
+<a href="https://github.com/strands-agents/samples/blob/main/LICENSE"><img alt="ライセンス" src="https://img.shields.io/github/license/strands-agents/samples"/></a>
+</div>
+
+<p>
+<a href="https://strandsagents.com/">ドキュメント</a>
+◆ <a href="https://github.com/strands-agents/samples">サンプル</a>
+◆ <a href="https://github.com/strands-agents/sdk-python">Python SDK</a>
+◆ <a href="https://github.com/strands-agents/tools">ツール</a>
+◆ <a href="https://github.com/strands-agents/agent-builder">エージェントビルダー</a>
+◆ <a href="https://github.com/strands-agents/mcp-server">MCP Server</a>
+</p>
+</div>
+
+Strands Agents サンプルリポジトリへようこそ！
+
+<a href="https://strandsagents.com">Strands Agents</a> を使い始めるための、使いやすいサンプルをご覧ください。
+
+このリポジトリのサンプルは、**デモンストレーションおよび教育目的**のみに提供されています。概念や手法を示すものであり、**本番環境での直接使用を意図したものではありません**。本番環境で使用する前に、必ず適切な**セキュリティ**および**テスト**手順を適用してください。
+
+## 📚 目次
+
+- [📚 目次](#-table-of-contents)
+- [🏁 はじめに](#-getting-started)
+- [ステップ 1: 必要なパッケージのインストール](#step-1-install-required-packages)
+- [ステップ 2: モデルプロバイダーのセットアップ](#step-2-setup-model-provider)
+- [ステップ 3: 最初の Strands エージェントの構築](#step-3-build-your-first-strands-agent)
+- [ステップ 4: SDK の使用開始](#step-4-getting-started-with-the-sdk)
+- [ステップ 5: その他のサンプルの探索](#step-5-explore-more-samples)
+
+## 🏁 はじめに
+
+### ステップ 1: 必要なパッケージのインストール
+
+```bash
+pip install strands-agents
+pip install strands-agents-tools
+```
+
+### ステップ 2: モデルプロバイダーの設定
+
+[こちら](https://strandsagents.com/latest/user-guide/quickstart/#model-providers) の手順に従って、モデルプロバイダーとモデルアクセスを構成します。
+
+### ステップ 3: 最初の Strands エージェントを作成する
+
+```python
+from strands import Agent, tool
+from strands_tools import calculator, current_time, python_repl
+
+@tool
+def letter_counter(word: str, letter: str) -> int:
+"""
+単語内の特定の文字の出現回数をカウントします。
+"""
+if not isinstance(word, str) or not isinstance(letter, str):
+return 0
+if len(letter) != 1:
+raise ValueError("'letter' パラメータは1文字である必要があります")
+return word.lower().count(letter.lower())
+
+agent = Agent(tools=[calculator, current_time, python_repl, letter_counter])
+
+message = """
+4つのリクエストがあります:
+
+1. 正しい時刻はいつですか？今？
+2. 3111696 / 74088 を計算してください。
+3. 「strawberry」という単語には R がいくつ含まれているか教えてください 🍓
+4. 今説明した内容を実行するスクリプトを出力してください！
+出力する前に、Python ツールを使用してスクリプトが動作することを確認してください。
+"""
+
+agent(message)
+```
+
+### ステップ 4: SDK の使用開始
+
+[01-tutorials](./01-tutorials/) ディレクトリから開始します。
+[最初のエージェント](./01-tutorials/01-fundamentals/01-first-agent/) を作成し、コア機能を網羅したノートブックベースのサンプルを調べてください。
+
+### ステップ 5: その他のサンプルを調べる
+
+ヒントをお探しですか？
+[02-samples](./02-samples/) フォルダにあるその他のサンプルで、実際のユースケースをご覧ください。
+
+## 貢献 ❤️
+
+貢献を歓迎します！以下の点については、[貢献ガイド](CONTRIBUTING.md)をご覧ください。
+- バグと機能の報告
+- 開発環境
+- プルリクエストによる貢献
+- 行動規範
+- セキュリティ問題の報告
+
+## ライセンス
+
+このプロジェクトはApache License 2.0に基づいてライセンスされています。詳細は[LICENSE](LICENSE)ファイルをご覧ください。
+
+## セキュリティ
+
+詳細は[CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications)をご覧ください。
+
+## ⚠️ プレビューステータス
+
+Strands Agentsは現在パブリックプレビュー中です。この期間中は、以下の点にご注意ください。
+- SDKの改良に伴い、APIが変更される可能性があります。
+- フィードバックと貢献をお待ちしております。
