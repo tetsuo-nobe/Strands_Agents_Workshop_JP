@@ -1,20 +1,20 @@
-# Swarm Agents
+# Swarm エージェント
 
-## Overview
+## 概要
 
-The Swarm pattern enables multiple AI agents to collaborate on complex tasks through parallel processing and shared memory. Agents work together using different coordination strategies to achieve emergent collective intelligence.
+Swarm パターンは、複数の AI エージェントが並列処理と共有メモリを通じて複雑なタスクを共同で実行することを可能にします。エージェントは、異なる調整戦略を用いて連携し、創発的な集合知を実現します。
 
-Here's an example of a swarm : 
+スウォームの例を以下に示します。
 
-![Architecture](./images/swarm_example.png)
+![アーキテクチャ](./images/swarm_example.png)
 
-## Coordination Patterns
+## コーディネーションパターン
 
-- **Collaborative**: Agents build upon each other's insights
-- **Competitive**: Agents independently seek unique solutions
-- **Hybrid**: Balanced approach combining both strategies
+- **協調型**: エージェントは互いの洞察に基づいて構築します
+- **競争型**: エージェントは独立して独自の解決策を模索します
+- **ハイブリッド型**: 両方の戦略を組み合わせたバランスの取れたアプローチ
 
-## Usage
+## 使用方法
 
 ```python
 from strands import Agent
@@ -22,35 +22,35 @@ from strands_tools import swarm
 
 agent = Agent(tools=[swarm])
 
-# Create a collaborative swarm
+# 協調型スウォームを作成します
 result = agent.tool.swarm(
-    task="Analyze the environmental impact of renewable energy sources",
-    swarm_size=5,
-    coordination_pattern="collaborative"
+task="再生可能エネルギー源の環境影響を分析する",
+swarm_size=5,
+coordination_pattern="collaborative"
 )
 
-# Use a competitive pattern
+# 競争型パターンを使用します
 result = agent.tool.swarm(
-    task="Generate marketing campaign concepts for a new smartphone",
-    swarm_size=3,
-    coordination_pattern="competitive"
+task="新しいスマートフォンのマーケティングキャンペーンコンセプトを生成する",
+swarm_size=3,
+調整パターン="競合"
 )
 ```
 
-## Key Features
+## 主な機能
 
-- **Parallel Processing**: Multiple agents work simultaneously
-- **Shared Memory**: Knowledge exchange between agents
-- **Phase-Based Execution**: Progressive refinement of solutions
-- **Agent Specialization**: Tailored roles based on coordination pattern
+- **並列処理**: 複数のエージェントが同時に動作します
+- **共有メモリ**: エージェント間の知識交換
+- **フェーズベースの実行**: ソリューションの段階的な改良
+- **エージェントの特化**: 調整パターンに基づいた役割のカスタマイズ
 
-Read more about how it works [here](https://strandsagents.com/latest/user-guide/concepts/multi-agent/swarm/#how-the-swarm-tool-works) 
+仕組みの詳細については、[こちら](https://strandsagents.com/latest/user-guide/concepts/multi-agent/swarm/#how-the-swarm-tool-works) をご覧ください。
 
-## When to Use
+## 使用例
 
-- Complex problem solving requiring multiple perspectives
-- Creative ideation and brainstorming
-- Comprehensive research and analysis
-- Decision making with multiple criteria
+- 複数の視点を必要とする複雑な問題解決
+- 創造的なアイデア創出とブレインストーミング
+- 包括的な調査と分析
+- 複数の基準に基づく意思決定
 
-For more detailed information, please read the [documentation](https://strandsagents.com/latest/user-guide/concepts/multi-agent/swarm/).
+詳細については、[ドキュメント](https://strandsagents.com/latest/user-guide/concepts/multi-agent/swarm/) をご覧ください。
