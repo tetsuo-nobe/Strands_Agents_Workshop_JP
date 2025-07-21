@@ -1,131 +1,130 @@
-# Creating Tools with Strands SDK
+# Strands SDK を使ったツールの作成
 
-This guide explains the different ways to create tools for your Strands Agents.
+このガイドでは、Strands エージェント用のツールを作成するさまざまな方法について説明します。
 
-## Ways to Create Tools
+## ツールの作成方法
 
-### 1. Using the `@tool` Decorator
+### 1. `@tool` デコレータの使用
 
-The simplest way to create a tool is by using the `@tool` decorator on a Python function:
+ツールを作成する最も簡単な方法は、Python 関数で `@tool` デコレータを使用することです。
 
 ```python
 from strands import tool
 
 @tool
 def my_tool(param1: str, param2: int) -> str:
-    """
-    Description of what my tool does.
-    
-    Args:
-        param1: Description of first parameter
-        param2: Description of second parameter
-        
-    Returns:
-        Description of what is returned
-    """
-    # Dummy implementation
-    return f"Result: {param1}, {param2}"
+"""
+ツールの機能の説明。
+
+引数:
+param1: 第 1 パラメータの説明
+param2: 第 2 パラメータの説明
+
+戻り値:
+戻り値の説明
+"""
+# ダミー実装
+return f"Result: {param1}, {param2}"
 ```
 
-Note: This approach uses Python docstrings to document the tool and type hints for parameter validation
+注: この方法では、ツールの説明とパラメータ検証のための型ヒントとして Python の docstring を使用します。
 
-### 2. Using TOOL_SPEC Dictionary
+### 2. TOOL_SPEC ディクショナリの使用
 
-For more control over tool definition, you can use the TOOL_SPEC dictionary approach:
+ツール定義をより細かく制御するには、TOOL_SPEC ディクショナリを使用します。
 
 ```python
 from strands.types.tools import ToolResult, ToolUse
-from typing import Any
+from entering import Any
 
 TOOL_SPEC = {
-    "name": "my_tool",
-    "description": "Description of what this tool does",
-    "inputSchema": {
-        "json": {
-            "type": "object",
-            "properties": {
-                "param1": {
-                    "type": "string",
-                    "description": "Description of first parameter"
-                },
-                "param2": {
-                    "type": "integer",
-                    "description": "Description of second parameter",
-                    "default": 2
-                }
-            },
-            "required": ["param1"]
-        }
-    }
+"name": "my_tool",
+"description": "このツールの機能の説明",
+"inputSchema": {
+"json": {
+"type": "object",
+"properties": {
+"param1": {
+"type": "string",
+"description": "最初のパラメータの説明"
+},
+"param2": {
+"type": "integer",
+"description": "2番目のパラメータの説明",
+"default": 2
+}
+},
+"required": ["param1"]
+}
 }
 
-# Function name must match tool name
+# 関数名はツール名と一致する必要があります
 def my_tool(tool: ToolUse, **kwargs: Any) -> ToolResult:
-    tool_use_id = tool["toolUseId"]
-    param1 = tool["input"].get("param1")
-    param2 = tool["input"].get("param2", 2)
-    
-    # Tool implementation
-    result = f"Result: {param1}, {param2}"
-    
-    return {
-        "toolUseId": tool_use_id,
-        "status": "success",
-        "content": [{"text": result}]
-    }
+tool_use_id = tool["toolUseId"]
+param1 = tool["input"].get("param1")
+param2 = tool["input"].get("param2", 2)
+
+# ツールの実装
+result = f"Result: {param1}, {param2}"
+
+return {
+"toolUseId": tool_use_id,
+"status": "success",
+"content": [{"text": result}]
+}
 ```
 
-This approach gives you more control over input schema definition. Here you can define explicit handling of success and error states.
+このアプローチにより、入力スキーマの定義をより細かく制御できます。ここでは、成功状態とエラー状態の明示的な処理を定義できます。
 
-Note: This follows the Amazon Bedrock Converse API format
+注: これは Amazon Bedrock Converse API 形式に準拠しています。
 
-#### Usage
+#### 使用方法
 
-You can import the tool through a function or from another file as well like so:
+ツールは、関数または別のファイルから次のようにインポートできます。
 
 ```python
 agent = Agent(tools=[my_tool])
-# or 
+# または
 agent = Agent(tools=["./my_tool.py"])
 ```
 
-### 3. Using MCP (Model Context Protocol) Tools
+### 3. MCP (モデルコンテキストプロトコル) ツールの使用
 
-You can also integrate external tools using the Model Context Protocol:
+モデルコンテキストプロトコルを使用して外部ツールを統合することもできます。
 
 ```python
 from mcp import StdioServerParameters, stdio_client
 from strands.tools.mcp import MCPClient
 
-# Connect to an MCP server
+# MCP サーバーに接続します。
 mcp_client = MCPClient(
-    lambda: stdio_client(
-        StdioServerParameters(
-            command="uvx", args=["awslabs.aws-documentation-mcp-server@latest"]
-        )
-    )
+lambda: stdio_client(
+StdioServerParameters(
+command="uvx", args=["awslabs.aws-documentation-mcp-server@latest"]
+)
+)
 )
 
-# Use the tools in your agent
-with mcp_client:
-    tools = mcp_client.list_tools_sync()
-    agent = Agent(tools=tools)
+# エージェント内のツールを使用する
+mcp_client を使用:
+tools = mcp_client.list_tools_sync()
+agent = Agent(tools=tools)
 ```
 
-This approach connects to external tool providers through MCP, thus allowing tools from different servers. It supports both stdio and HTTP transports
+この方法では、MCP を介して外部ツールプロバイダーに接続するため、異なるサーバーのツールを使用できます。 stdio と HTTP の両方のトランスポートをサポートしています。
 
-## Best Practices
+## ベストプラクティス
 
-1. **Tool Naming**: Use clear, descriptive names for your tools
-2. **Documentation**: Provide detailed descriptions of what the tool does and its parameters
-3. **Error Handling**: Include proper error handling in your tools
-4. **Parameter Validation**: Validate inputs before processing
-5. **Return Values**: Return structured data that's easy for the agent to understand
+1. **ツールの命名**: ツールには、明確で説明的な名前を付けます。
+2. **ドキュメント**: ツールの機能とパラメータについて詳細な説明を提供します。
+3. **エラー処理**: ツールに適切なエラー処理を組み込みます。
+4. **パラメータ検証**: 処理前に入力を検証します。
+5. **戻り値**: エージェントが理解しやすい構造化データを返します。
 
-## Examples
+## 例
 
-Check out the example notebooks in this directory:
-- [Using MCP Tools](01-using-mcp-tools/mcp-agent.ipynb): Learn how to integrate MCP tools with your agent
-- [Custom Tools](02-custom-tools/custom-tools-with-strands-agents.ipynb): Learn how to create and use custom tools
+このディレクトリにあるサンプルノートブックをご覧ください。
+- [MCP ツールの使用](01-using-mcp-tools/mcp-agent.ipynb): MCP ツールをエージェントに統合する方法を学びます。
+- [カスタムツール](02-custom-tools/custom-tools-with-strands-agents.ipynb): カスタムツールの作成と使用方法を学びます。
 
-For more details, see the [Strands tools documentation](https://strandsagents.com/0.1.x/user-guide/concepts/tools/python-tools/).
+詳細については、[Strands ツール] をご覧ください。ドキュメント](https://strandsagents.com/0.1.x/user-guide/concepts/tools/python-tools/)を参照してください。
