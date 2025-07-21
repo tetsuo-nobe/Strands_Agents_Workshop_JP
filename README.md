@@ -13,12 +13,6 @@ Strands Agents サンプル
 わずか数行のコードでAIエージェントを構築できるモデル駆動型アプローチ
 </h2>
 
-<div align="center">
-<a href="https://github.com/strands-agents/samples/graphs/commit-activity"><img alt="GitHub コミットアクティビティ" src="https://img.shields.io/github/commit-activity/m/strands-agents/samples"/></a>
-<a href="https://github.com/strands-agents/samples/issues"><img alt="GitHub オープン Issue" src="https://img.shields.io/github/issues/strands-agents/samples"/></a>
-<a href="https://github.com/strands-agents/samples/pulls"><img alt="GitHub オープンプルリクエスト" src="https://img.shields.io/github/issues-pr/strands-agents/samples"/></a>
-<a href="https://github.com/strands-agents/samples/blob/main/LICENSE"><img alt="ライセンス" src="https://img.shields.io/github/license/strands-agents/samples"/></a>
-</div>
 
 <p>
 <a href="https://strandsagents.com/">ドキュメント</a>
