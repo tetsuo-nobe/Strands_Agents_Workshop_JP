@@ -1,40 +1,39 @@
-# Multi-Agent Systems
+# マルチエージェントシステム
 
-This tutorial section explores different approaches to building multi-agent systems using Strands Agents SDK.
+このチュートリアルでは、Strands Agents SDK を使用してマルチエージェントシステムを構築するためのさまざまなアプローチについて説明します。
 
-## Approaches to Multi-Agent Systems
+## マルチエージェントシステムへのアプローチ
 
-### 1. Agents as Tools 
-[Link to docs](https://strandsagents.com/latest/user-guide/concepts/multi-agent/agents-as-tools/)
+### 1. ツールとしてのエージェント
+[ドキュメントへのリンク](https://strandsagents.com/latest/user-guide/concepts/multi-agent/agents-as-tools/)
 
-The "Agents as Tools" pattern creates a hierarchical structure where specialized AI agents are wrapped as callable functions (tools) that can be used by other agents:
+「ツールとしてのエージェント」パターンは、特殊なAIエージェントを他のエージェントから使用できる呼び出し可能な関数（ツール）としてラップする階層構造を構築します。
 
-- **Orchestrator Agent**: Handles user interaction and delegates tasks to specialized agents
-- **Specialized Tool Agents**: Perform domain-specific tasks when called by the orchestrator
-- **Key Benefits**: Separation of concerns, hierarchical delegation, modular architecture
+- **オーケストレータエージェント**: ユーザーインタラクションを処理し、タスクを特殊エージェントに委譲します。
+- **特殊ツールエージェント**: オーケストレータから呼び出されると、ドメイン固有のタスクを実行します。
+- **主な利点**: 関心の分離、階層的な委譲、モジュール型アーキテクチャ
 
-Implementation involves using the `@tool` decorator to transform specialized agents into callable functions:
+実装では、`@tool` デコレータを使用して、特殊エージェントを呼び出し可能な関数に変換します。
 
 ```python
 @tool
 def research_assistant(query: str) -> str:
-    """Process and respond to research-related queries."""
-    research_agent = Agent(system_prompt=RESEARCH_ASSISTANT_PROMPT)
-    return str(research_agent(query))
+"""研究関連の処理と応答クエリ。"""
+research_agent = Agent(system_prompt=RESEARCH_ASSISTANT_PROMPT)
+return str(research_agent(query))
 ```
 
+### 2. エージェントスウォーム
+[ドキュメントへのリンク](https://strandsagents.com/latest/user-guide/concepts/multi-agent/swarm/)
 
-### 2. Agent Swarms
-[Link to docs](https://strandsagents.com/latest/user-guide/concepts/multi-agent/swarm/)
+エージェントスウォームは、連携して動作する自律型AIエージェントの集合体を通じて、集合知を活用します。
 
-Agent swarms leverage collective intelligence through a collection of autonomous AI agents working together:
+- **分散制御**: 単一のエージェントがシステム全体を制御することはありません。
+- **共有メモリ**: エージェントは洞察を交換し、集合的な知識を構築します。
+- **調整メカニズム**: 協調型、競争型、またはハイブリッド型のアプローチ
+- **通信パターン**: エージェントが相互に通信できるメッシュネットワーク
 
-- **Decentralized Control**: No single agent directs the entire system
-- **Shared Memory**: Agents exchange insights to build collective knowledge
-- **Coordination Mechanisms**: Collaborative, competitive, or hybrid approaches
-- **Communication Patterns**: Mesh networks where agents can communicate with each other
-
-The built-in `swarm` tool simplifies implementation:
+組み込みの `swarm` ツールにより、実装が簡素化されます。
 
 ```python
 from strands import Agent
@@ -42,56 +41,56 @@ from strands_tools import swarm
 
 agent = Agent(tools=[swarm])
 result = agent.tool.swarm(
-    task="Analyze this dataset and identify market trends",
-    swarm_size=4,
-    coordination_pattern="collaborative"
+task="このデータセットを分析し、市場動向を特定する",
+swarm_size=4,
+coordination_pattern="collaborative"
 )
 ```
 
-### 3. Agent Graphs
-[Link to docs](https://strandsagents.com/latest/user-guide/concepts/multi-agent/graph/)
+### 3. エージェントグラフ
+[ドキュメントへのリンク](https://strandsagents.com/latest/user-guide/concepts/multi-agent/graph/)
 
-Agent graphs provide structured networks of interconnected AI agents with explicit communication pathways:
+エージェントグラフは、相互接続されたAIエージェントと明示的な通信経路の構造化ネットワークを提供します。
 
-- **Nodes (Agents)**: Individual AI agents with specialized roles
-- **Edges (Connections)**: Define communication pathways between agents
-- **Topology Patterns**: Star, mesh, or hierarchical structures
+- **ノード（エージェント）**: 特殊な役割を持つ個々のAIエージェント
+- **エッジ（接続）**: エージェント間の通信経路を定義します
+- **トポロジパターン**: スター型、メッシュ型、または階層型構造
 
-The `agent_graph` tool enables creation of sophisticated agent networks:
+`agent_graph`ツールを使用すると、高度なエージェントネットワークを作成できます。
 
 ```python
 from strands import Agent
 from strands_tools import agent_graph
 
-agent = Agent(tools=[agent_graph])
+エージェント= Agent(tools=[agent_graph])
 agent.tool.agent_graph(
-    action="create",
-    graph_id="research_team",
-    topology={
-        "type": "star",
-        "nodes": [
-            {"id": "coordinator", "role": "team_lead"},
-            {"id": "data_analyst", "role": "analyst"},
-            {"id": "domain_expert", "role": "expert"}
-        ],
-        "edges": [
-            {"from": "coordinator", "to": "data_analyst"},
-            {"from": "coordinator", "to": "domain_expert"}
-        ]
-    }
+action="create",
+graph_id="research_team",
+topology={
+"type": "star",
+"nodes": [
+{"id": "coordinator", "role": "team_lead"},
+{"id": "data_analyst", "role": "analyst"},
+{"id": "domain_expert", "role": "expert"}
+],
+"edges": [
+{"from": "coordinator", "to": "data_analyst"},
+{"from": "coordinator", "to": "domain_expert"}
+]
+}
 )
 ```
 
-### 4. Agent Workflows
-[Link to docs](https://strandsagents.com/latest/user-guide/concepts/multi-agent/workflow/)
+### 4. エージェントワークフロー
+[ドキュメントへのリンク](https://strandsagents.com/latest/user-guide/concepts/multi-agent/workflow/)
 
-Agent workflows coordinate tasks across multiple AI agents in defined sequences with clear dependencies:
+エージェントワークフローは、複数のAIエージェント間でタスクを調整します。明確な依存関係を持つ定義されたシーケンス:
 
-- **Task Definition**: Clear description of what each agent needs to accomplish
-- **Dependency Management**: Sequential dependencies, parallel execution, join points
-- **Information Flow**: Connecting one agent's output to another's input
+- **タスク定義**: 各エージェントが実行する必要がある処理を明確に記述
+- **依存関係管理**: シーケンシャル依存関係、並列実行、ジョインポイント
+- **情報フロー**: あるエージェントの出力を別のエージェントの入力に接続
 
-The `workflow` tool handles task creation, dependency resolution, and execution:
+`workflow` ツールは、タスクの作成、依存関係の解決、および実行を処理します:
 
 ```python
 from strands import Agent
@@ -99,27 +98,27 @@ from strands_tools import workflow
 
 agent = Agent(tools=[workflow])
 agent.tool.workflow(
-    action="create",
-    workflow_id="data_analysis",
-    tasks=[
-        {
-            "task_id": "data_extraction",
-            "description": "Extract key data from the report"
-        },
-        {
-            "task_id": "analysis",
-            "description": "Analyze the extracted data",
-            "dependencies": ["data_extraction"]
-        }
-    ]
+action="create",
+workflow_id="data_analysis",
+tasks=[
+{
+"task_id": "data_extraction",
+"description": "レポートから重要なデータを抽出する"
+},
+{
+"task_id": "analysis",
+"description": "抽出したデータを分析する",
+"dependencies": ["data_extraction"]
+}
+]
 )
 ```
 
-## Choosing the Right Approach
+## 適切なアプローチの選択
 
-- **Agents as Tools**: Best for clear hierarchical structures with specialized expertise
-- **Agent Swarms**: Ideal for collaborative problem-solving with emergent intelligence
-- **Agent Graphs**: Perfect for precise control over communication patterns
-- **Agent Workflows**: Optimal for sequential processes with clear dependencies
+- **ツールとしてのエージェント**：明確な階層構造と専門知識を持つ場合に最適
+- **エージェントスウォーム**：創発的な知性を活用した協調的な問題解決に最適
+- **エージェントグラフ**：コミュニケーションパターンの正確な制御に最適
+- **エージェントワークフロー**：明確な依存関係を持つシーケンシャルなプロセスに最適
 
-Each approach offers different trade-offs in terms of complexity, control, and collaboration patterns. The right choice depends on your specific use case and requirements.
+それぞれのアプローチは、複雑さ、制御、コラボレーションパターンに関して異なるトレードオフをもたらします。適切な選択は、具体的なユースケースと要件によって異なります。
