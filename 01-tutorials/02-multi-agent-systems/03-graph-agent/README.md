@@ -1,55 +1,55 @@
-### What is an Agent Graph?
+### エージェントグラフとは？
 
-An Agent Graph is a collection of AI agents organized in a specific topology where:
+エージェントグラフとは、特定のトポロジーで構成されたAIエージェントの集合体です。以下の要素が含まれます。
 
-- **Nodes**: Individual agents with specific roles, identity, tools and system prompts
-- **Edges**: Communication paths between agents
-- **Topologies**: Different network structures (star, mesh, hierarchical)
+- **ノード**: 特定の役割、ID、ツール、システムプロンプトを持つ個々のエージェント
+- **エッジ**: エージェント間の通信パス
+- **トポロジ**: 様々なネットワーク構造（スター型、メッシュ型、階層型）
 
-### Common Topologies
+### 一般的なトポロジ
 
-1. **Star Topology**: A central agent coordinates with multiple specialized agents
-
-```mermaid
-graph TD
-    subgraph "Star Topology"
-        Central[Central Agent] --> Agent1[Agent 1]
-        Central --> Agent2[Agent 2]
-        Central --> Agent3[Agent 3]
-        Central --> Agent4[Agent 4]
-        Agent1 --> Central
-        Agent2 --> Central
-        Agent3 --> Central
-        Agent4 --> Central
-    end
-```
-2. **Mesh Topology**: All agents can communicate directly with each other
+1. **スタートポロジ**: 中央エージェントが複数の専門エージェントと連携します
 
 ```mermaid
 graph TD
-    subgraph "Mesh Topology"
-        MAgent1[Agent 1] <--> MAgent2[Agent 2]
-        MAgent1 <--> MAgent3[Agent 3]
-        MAgent1 <--> MAgent4[Agent 4]
-        MAgent2 <--> MAgent3
-        MAgent2 <--> MAgent4
-        MAgent3 <--> MAgent4
-    end
+サブグラフ "スタートポロジ"
+中央[中央エージェント] --> エージェント1[エージェント1]
+中央 --> エージェント2[エージェント2]
+中央 --> エージェント3[エージェント3]
+中央 --> エージェント4[エージェント4]
+エージェント1 --> 中央
+エージェント2 --> 中央
+エージェント3 --> 中央
+エージェント4 --> 中央
+終了
 ```
-3. **Hierarchical Topology**: Agents are organized in layers with defined reporting structures
+2. **メッシュトポロジ**: すべてのエージェントが相互に直接通信できます
 
 ```mermaid
 graph TD
-    subgraph "Hierarchical Topology"
-        HAgent1[Executive Agent] --> HAgent2[Manager 1]
-        HAgent1 --> HAgent3[Manager 2]
-        HAgent2 --> HAgent4[Worker 1]
-        HAgent2 --> HAgent5[Worker 2]
-        HAgent3 --> HAgent6[Worker 3]
-        HAgent3 --> HAgent7[Worker 4]
-    end
+サブグラフ「メッシュトポロジ」
+MAgent1[エージェント1] <--> MAgent2[エージェント2]
+MAgent1 <--> MAgent3[エージェント3]
+MAgent1 <--> MAgent4[エージェント4]
+MAgent2 <--> MAgent3
+MAgent2 <--> MAgent4
+MAgent3 <--> MAgent4
+終了
+```
+3. **階層型トポロジ**：エージェントは定義された報告構造を持つ階層構造に編成されます
+
+```mermaid
+グラフ TD
+サブグラフ「階層型トポロジ」
+HAgent1[エグゼクティブエージェント] --> HAgent2[マネージャー1]
+HAgent1 --> HAgent3[マネージャー2]
+HAgent2 --> HAgent4[ワーカー1]
+HAgent2 --> HAgent5[ワーカー2]
+HAgent3 --> HAgent6[ワーカー3]
+HAgent3 --> HAgent7[Worker 4]
+終了
 ```
 
-### Example
+### 例
 
-To get started with building agents with these patterns. Navigate to `graph.ipynb` to build a graph using the **star topology**.
+これらのパターンを使用してエージェントの構築を開始するには、`graph.ipynb` に移動し、**スタートポロジ** を使用してグラフを構築します。
